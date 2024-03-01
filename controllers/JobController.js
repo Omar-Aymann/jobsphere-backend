@@ -1,7 +1,8 @@
 const Jobs = require("../models/Jobs");
-function getJobs() {
+async function getJobs() {
     try {
-        return Jobs.find({});
+        const jobs = await Jobs.find({}).sort({created_at: "desc"});
+        return jobs
     } catch(e) {
         return e;
     }
@@ -10,12 +11,20 @@ function getJobs() {
 
  async function createJob(props) {
     try {
-       const job = await Jobs.create(props);
+       const job = await Jobs.create({...props, created_at: Date.now()});
        return job;
     } catch(e) {
         return e;
     }
    
+}
+async function getJob(id) {
+    try {
+        const job = await Jobs.find({_id: id});
+        return job
+    } catch(e) {
+        return e;
+    }
 }
 async function updateJob(jobId, props) {
     try {
@@ -34,4 +43,4 @@ async function deleteJob(jobId) {
         return e;
     }
 }
-module.exports = {getJobs, createJob, updateJob, deleteJob};
+module.exports = {getJobs, createJob, updateJob, deleteJob, getJob};

@@ -5,6 +5,7 @@ const jobsSchema = mongoose.Schema(
         title: {type: String, required: true},
         description: {type: String, required: true},
         company: {type: String, required: true},
+        created_at: {type: Date, required: true}
     }
 )
 
